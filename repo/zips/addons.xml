@@ -1,5 +1,23 @@
 <?xml version='1.0' encoding='utf-8'?>
-<addons><addon id="plugin.video.bundesliga" name="Fussball" version="anti-Dazn" provider-name="Elias">
+<addons><addon id="addon.repo.homo" name="Fussball" version="88" provider-name="Elsasslot">
+    <extension point="xbmc.addon.repository" name="Example Repository">
+        <dir>
+            <info compressed="false">https://raw.githubusercontent.com/EliasTX09/repo/main/repo/zips/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/EliasTX09/repo/main/repo/zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/EliasTX09/repo/main/repo/zips/</datadir>
+        </dir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Fussball</summary>
+        <description>Seestern</description>
+        <disclaimer />
+        <platform>all</platform>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon><addon id="plugin.video.bundesliga" name="Fussball" version="45" provider-name="Elias">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
         <import addon="script.module.requests" />
