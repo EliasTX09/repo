@@ -30,7 +30,7 @@ URLS = {
     "Europa League Frauen": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_soccer.json"
 }
 
-# Bilder für die Ligen
+# Bilder für die Ligiten
 IMAGES = {
     "Bundesliga": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/bundesliga.png",
     "2. Bundesliga": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/bundesliga.png",
