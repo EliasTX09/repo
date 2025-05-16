@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="2.0" encoding="UTF-8"?>
 <addon id="plugin.video.bundesliga" name="Fussball" version="anti-Dazn" provider-name="Elias">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
@@ -18,8 +18,8 @@
 
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
-        <summary lang="en">Jet Extractors</summary>
-        <description lang="en">Jet Extractors</description>
+        <summary lang="en">Fussball</summary>
+        <description lang="en">Fussball</description>
         <disclaimer lang="en"></disclaimer>
         <license>MIT</license>
         <assets>

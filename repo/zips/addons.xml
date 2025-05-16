@@ -18,8 +18,8 @@
 
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
-        <summary lang="en">Jet Extractors</summary>
-        <description lang="en">Jet Extractors</description>
+        <summary lang="en">Fussball</summary>
+        <description lang="en">Fussball</description>
         <disclaimer lang="en" />
         <license>MIT</license>
         <assets>
