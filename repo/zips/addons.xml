@@ -17,18 +17,33 @@
             <fanart>fanart.jpg</fanart>
         </assets>
     </extension>
-</addon><addon id="plugin.video.bundesliga" name="Fussball" version="1.4" provider-name="Elias">
+</addon><addon id="plugin.video.bundesliga" name="Fussball" version="5.0" provider-name="Elias">
     <requires>
-        <import addon="plugin.video.madtitansports" />
         <import addon="xbmc.python" version="3.0.0" />
-        <import addon="script.module.requests" />
-        <import addon="script.module.beautifulsoup4" />
-        <import addon="script.module.dateutil" />
-        <import addon="script.module.soupsieve" />
-        <import addon="script.module.pyairtable" />
-        <import addon="script.module.pyamf" />
-        <import addon="script.module.pycryptodome" optional="true" />
-        <import addon="script.module.pyjsparser" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.routing" />
+    <import addon="script.module.unidecode" />
+    <import addon="script.module.inputstreamhelper" />
+    <import addon="script.module.resolveurl" />
+    <import addon="script.module.microjenscrapers" />
+    <import addon="script.module.tzlocal" />
+    <import addon="script.module.jetextractors" />
+    <import addon="script.module.pytz" />
+    <import addon="plugin.video.jetproxy" optional="true" />
+    <import addon="inputstream.ffmpegdirect" />
+    
+    <import addon="inputstream.adaptive" />
+    <import addon="script.module.pyamf" />
+    
+    <import addon="script.module.tabulate" />    
+    <import addon="plugin.video.madtitansports" />
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.dateutil" />
+    <import addon="script.module.soupsieve" />
+    <import addon="script.module.pyairtable" />
+    <import addon="script.module.pyamf" />
+    <import addon="script.module.pycryptodome" optional="true" />
+    <import addon="script.module.pyjsparser" />
     </requires>
 
     <extension point="xbmc.python.pluginsource" library="default.py">
