@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="addon.repo.homo" name="Fussball" version="1,2" provider-name="Elsasslot">.
+<addon id="addon.repo.homo" name="Fussball" version="1.2a" provider-name="Elsasslot">.
     <extension point="xbmc.addon.repository" name="Example Repository">
         <dir>
             <info compressed="false">https://raw.githubusercontent.com/EliasTX09/repo/main/repo/zips/addons.xml</info>
