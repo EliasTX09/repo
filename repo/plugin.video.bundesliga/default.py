@@ -6,113 +6,39 @@ import xbmcplugin
 import xbmcgui
 import re
 from datetime import datetime
+import pytz
+
+
+HANDLE = int(sys.argv[1])
+BASE_URL = sys.argv[0]
+
 
 HANDLE = int(sys.argv[1])
 BASE_URL = sys.argv[0]
 
 # URLs für die verschiedenen Ligen
-URLS = {
-    "Bundesliga": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_soccer.json",
-    "2. Bundesliga": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_soccer.json",
-    "Premier League": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_england_soccer.json",
-    "La Liga": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_soccer.json",
-    "Ligue 1": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_soccer.json",
-    "Serie A": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_soccer.json",
-    "Champions League": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_soccer.json",
-    "Bundesliga Frauen": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_soccer.json",
-    "2. Bundesliga Frauen": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_soccer.json",
-    "Premier League Frauen": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_england_soccer.json",
-    "La Liga Frauen": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_soccer.json",
-    "Ligue 1 Frauen": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_soccer.json",
-    "Serie A Frauen": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_soccer.json",
-    "Champions League Frauen": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_soccer.json",
-    "Europa League": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_soccer.json",
-    "Europa League Frauen": "https://magnetic.website/MAD_TITAN_SPORTS/SPORTS/LEAGUE/titansports_soccer.json"
-}
+_JSON_URL_URLS = "https://raw.githubusercontent.com/EliasTX09/json/main/json.json"
+
 
 # Bilder für die Ligen
-IMAGES = {
-    "Bundesliga": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/bundesliga.png",
-    "2. Bundesliga": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/bundesliga.png",
-    "Premier League": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/Premiere.png",
-    "La Liga": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/Laliga.png",
-    "Ligue 1": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/ligue1.png",
-    "Serie A": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/seriea.png",
-    "Champions League": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/championsleauge.png",
-    "Bundesliga Frauen": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/bundesliga.png",
-    "2. Bundesliga Frauen": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/bundesliga.png",
-    "Premier League Frauen": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/Premiere.png",
-    "La Liga Frauen": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/Laliga.png",
-    "Ligue 1 Frauen": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/ligue1.png",
-    "Serie A Frauen": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/seriea.png",
-    "Champions League Frauen": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/championsleauge.png",
-    "Europa League": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/Europaleauge.png",
-    "Europa League Frauen": "https://raw.githubusercontent.com/EliasTX09/resources/main/Ligen/Europaleauge.png"
-}
+IMAGES_JSON_URL =  "https://raw.githubusercontent.com/EliasTX09/json/main/IMAGES"
 
-SENDER = [
-    {
-        "name": "DAZN 1",
-        "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.mp/stream/stream-426.php",
-        "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/dazn/DAZN1.png"
-    },
-    {
-        "name": "DAZN 2",
-        "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-427.php",
-        "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/dazn/DAZN2.png"
-    },
-    {
-        "name": "Sky Sport Bundesliga",
-        "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-558.php",
-        "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl1.png"
-    },
-     {
-         "name": "Sky Sport Bundesliga 2",
-         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-19.php",
-         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl2.png"
-     },
-     {
-         "name": "Sky Sport Bundesliga 3",
-          "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-18.php",
-         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl3.png"
-     },
-     {
-         "name": "Sky Sport Bundesliga 4",
-         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-21.php",
-         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl4.png"
-     },
-     {
-         "name": "Sky Sport Bundesliga 5",
-         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-23.php",
-         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl5.png"
-     },
-     {
-         "name": "Sky Sport Bundesliga 6",
-         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-17.php",
-         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl6.png"
-     },
-     {
-         "name": "Sky Sport Bundesliga 7",
-         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-20.php",
-         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl7.png"
-     },
-     {
-         "name": "Sky Sport Bundesliga 8",
-         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-25.php",
-         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl8.png"
-     },
-     {
-         "name": "Sky Sport Bundesliga 9",
-         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-24.php",
-         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl9.png"
-     },
-     {
-         "name": "Sky Sport Bundesliga 10",
-         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-22.php",
-         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl10.png"
-     },
-]
 
+SENDER_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender.json"
+
+def load_json_from_url(url):
+    try:
+        with urllib.request.urlopen(url) as response:
+            data = response.read()
+            return json.loads(data.decode("utf-8"))
+    except Exception as e:
+        xbmcgui.Dialog().notification("Fehler", f"JSON konnte nicht geladen werden:\n{str(e)}", xbmcgui.NOTIFICATION_ERROR)
+        return None
+
+# URLs und Senderliste laden
+URLS = load_json_from_url(_JSON_URL_URLS) or {}
+SENDER = load_json_from_url(SENDER_JSON_URL) or []
+IMAGES = load_json_from_url(IMAGES_JSON_URL) or {}
 
 def list_sender():
     for sender in SENDER:
@@ -122,30 +48,37 @@ def list_sender():
         xbmcplugin.addDirectoryItem(handle=HANDLE, url=sender["url"], listitem=li, isFolder=False)
     xbmcplugin.endOfDirectory(HANDLE)
 
-def convert_time_string_manually(et_string):
+def convert_time_string_with_pytz(et_string):
     try:
-        match = re.search(r'(\d{1,2}):(\d{2}) (\[AP]M)', et_string)
+        match = re.search(r'(\d{1,2}):(\d{2}) ([AP]M)', et_string)
         if not match:
             return et_string
+
         hour, minute, period = int(match.group(1)), int(match.group(2)), match.group(3)
+
         if period == "PM" and hour != 12:
             hour += 12
         elif period == "AM" and hour == 12:
             hour = 0
 
-        hour += 6
-        if hour >= 24:
-            hour -= 24
+        et = pytz.timezone("US/Eastern")
+        cet = pytz.timezone("Europe/Berlin")
 
-        return f"{hour:02}:{minute:02} Uhr"
+        now = datetime.now()
+        dt_et = datetime(now.year, now.month, now.day, hour, minute)
+        dt_et = et.localize(dt_et)
+        dt_cet = dt_et.astimezone(cet)
+
+        return dt_cet.strftime("%H:%M Uhr")
     except Exception:
         return et_string
 
+# Ersetzt Uhrzeit im Titel
 def replace_time_in_title(title):
-    time_match = re.search(r'(\d{1,2}/\d{1,2} )?(\d{1,2}:\d{2} \[AP]M)', title)
+    time_match = re.search(r'(\d{1,2}/\d{1,2} )?(\d{1,2}:\d{2} [AP]M)', title)
     if time_match:
         original_time = time_match.group(2)
-        converted = convert_time_string_manually(original_time)
+        converted = convert_time_string_with_pytz(original_time)
         return title.replace(original_time, f"[COLORyellow]{converted}[/COLOR]")
     return title
 
@@ -155,7 +88,6 @@ def list_main_menu():
         li = xbmcgui.ListItem(label=category)
         xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
-    # Sender-Ordner hinzufügen
     url = f"{BASE_URL}?action=list_sender"
     li = xbmcgui.ListItem(label="Sender")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
@@ -225,14 +157,8 @@ def list_games_for_league(league):
 
         shown_titles = set()
 
-        # Immer zuerst: Reload + Suche
         reload_item = xbmcgui.ListItem(label="[COLORred]--------- [COLOR khaki]Neu laden[/COLOR][COLORred] ---------[/COLOR]")
-        xbmcplugin.addDirectoryItem(
-            handle=HANDLE,
-            url="plugin://plugin.video.madtitansports/refresh_menu",
-            listitem=reload_item,
-            isFolder=False
-        )
+        xbmcplugin.addDirectoryItem(handle=HANDLE, url="plugin://plugin.video.madtitansports/refresh_menu", listitem=reload_item, isFolder=False)
 
         search_item = xbmcgui.ListItem(label="[COLORwhite][B][I]Vorherige Suchen[/COLOR][/B][/I]")
         search_item.setArt({
