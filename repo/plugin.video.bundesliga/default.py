@@ -209,7 +209,7 @@ def is_excluded_from_bundesliga(item):
         "tipico bundesliga",
         "bundesliga women",
         "planet pure bundesliga women",
-        "2. bundesliga"
+        "2. bundesliga",
         "austria"
     ]
     return any(excl in content for excl in EXCLUDES)
