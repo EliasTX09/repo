@@ -17,7 +17,7 @@
             <fanart>fanart.jpg</fanart>
         </assets>
     </extension>
-</addon><addon id="plugin.video.bundesliga" name="Fussball" version="1.2" provider-name="Elias">
+</addon><addon id="plugin.video.bundesliga" name="Fussball" version="1.2.1" provider-name="Elias">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
         <import addon="script.module.requests" />
@@ -36,12 +36,13 @@
 
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
-        <summary lang="en">Jet Extractors</summary>
-        <description lang="en">Jet Extractors</description>
+        <summary lang="en">Fussball</summary>
+        <description lang="en">Fussball</description>
         <disclaimer lang="en" />
         <license>MIT</license>
         <assets>
             <icon>icon1.png</icon>
+            <fanart>fanart</fanart>
         </assets>
     </extension>
 </addon><addon id="repository.Magnetic" name="Magnetic Repo" version="1.1.0b" provider-name="1-cool-guy">
