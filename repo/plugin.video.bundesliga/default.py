@@ -66,51 +66,51 @@ SENDER = [
         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-558.php",
         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl1.png"
     },
-   # {
-   #     "name": "Sky Sport Bundesliga 2",
-   #     "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=",
-   #     "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl2.png"
-   # },
-   # {
-   #     "name": "Sky Sport Bundesliga 3",
-   #     "url": "",
-   #     "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl3.png"
-   # },
-   # {
-   #     "name": "Sky Sport Bundesliga 4",
-   #     "url": "",
-   #     "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl4.png"
-   # },
-   # {
-   #     "name": "Sky Sport Bundesliga 5",
-   #     "url": "",
-   #     "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl5.png"
-   # },
-   # {
-   #     "name": "Sky Sport Bundesliga 6",
-   #     "url": "",
-   #     "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl6.png"
-   # },
-   # {
-   #     "name": "Sky Sport Bundesliga 7",
-   #     "url": "",
-   #     "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl7.png"
-   # },
-   # {
-   #     "name": "Sky Sport Bundesliga 8",
-   #     "url": "",
-   #     "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl8.png"
-   # },
-   # {
-   #     "name": "Sky Sport Bundesliga 9",
-   #     "url": "",
-   #     "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl9.png"
-   # },
-   # {
-   #     "name": "Sky Sport Bundesliga 10",
-   #     "url": "",
-   #     "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl10.png"
-   # },
+     {
+         "name": "Sky Sport Bundesliga 2",
+         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-19.php",
+         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl2.png"
+     },
+     {
+         "name": "Sky Sport Bundesliga 3",
+          "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-18.php",
+         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl3.png"
+     },
+     {
+         "name": "Sky Sport Bundesliga 4",
+         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-21.php",
+         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl4.png"
+     },
+     {
+         "name": "Sky Sport Bundesliga 5",
+         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-23.php",
+         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl5.png"
+     },
+     {
+         "name": "Sky Sport Bundesliga 6",
+         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-17.php",
+         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl6.png"
+     },
+     {
+         "name": "Sky Sport Bundesliga 7",
+         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-20.php",
+         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl7.png"
+     },
+     {
+         "name": "Sky Sport Bundesliga 8",
+         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-25.php",
+         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl8.png"
+     },
+     {
+         "name": "Sky Sport Bundesliga 9",
+         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-24.php",
+         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl9.png"
+     },
+     {
+         "name": "Sky Sport Bundesliga 10",
+         "url": "plugin://plugin.video.madtitansports/sportjetextractors/play?urls=https://daddylive.dad/stream/stream-22.php",
+         "image": "https://raw.githubusercontent.com/EliasTX09/resources/main/sender/sky/skybl10.png"
+     },
 ]
 
 
