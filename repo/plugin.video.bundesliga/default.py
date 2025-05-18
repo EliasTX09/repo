@@ -64,7 +64,7 @@ URLS = load_json_from_url(_JSON_URL_URLS) or {}
 IMAGES = load_json_from_url(IMAGES_JSON_URL) or {}
 
 def list_sender():
-    m3u_url = "https://raw.githubusercontent.com/EliasTX09/json/refs/heads/main/sender.m3u"  # <-- HIER DEINE M3U-URL EINTRAGEN
+    m3u_url = "https://raw.githubusercontent.com/EliasTX09/json/main/sender.m3u"
 
     try:
         response = urllib.request.urlopen(m3u_url)
@@ -78,6 +78,12 @@ def list_sender():
                 li = xbmcgui.ListItem(label=name)
                 li.setProperty("IsPlayable", "true")
 
+                # Logo aus tvg-logo extrahieren
+                logo_match = re.search(r'tvg-logo="([^"]+)"', lines[i])
+                if logo_match:
+                    logo_url = logo_match.group(1)
+                    li.setArt({'thumb': logo_url, 'icon': logo_url})
+
                 xbmcplugin.addDirectoryItem(
                     handle=HANDLE,
                     url=f"{BASE_URL}?action=play&url={urllib.parse.quote(urllib.parse.unquote(stream_url))}",
@@ -88,6 +94,7 @@ def list_sender():
 
     except Exception as e:
         xbmcgui.Dialog().notification("M3U-Fehler", str(e), xbmcgui.NOTIFICATION_ERROR)
+
 
 
 
@@ -174,7 +181,7 @@ def belongs_to_league(item, league):
         return league_name in content
     return False
 
-def is_excluded_from_bundesliga(item):
+def is_excluded_from_bundesliga(item, league_name):
     fields = [
         item.get("title", ""),
         item.get("league", ""),
@@ -186,9 +193,11 @@ def is_excluded_from_bundesliga(item):
         "tipico bundesliga",
         "bundesliga women",
         "planet pure bundesliga women",
-        "2. bundesliga",
         "austria"
     ]
+    # 2. Bundesliga nur ausschließen, wenn es die "Bundesliga" Liga ist
+    if league_name == "Bundesliga":
+        EXCLUDES.append("2. bundesliga")
     return any(excl in content for excl in EXCLUDES)
 
 def list_games_for_league(league):
@@ -218,8 +227,10 @@ def list_games_for_league(league):
                 continue
             if not belongs_to_league(item, league):
                 continue
-            if league == "Bundesliga" and is_excluded_from_bundesliga(item):
+            if league == "Bundesliga" and is_excluded_from_bundesliga(item,league):
                 continue
+             
+
 
             title = item.get("title", "")
             title = replace_time_in_title(title)
