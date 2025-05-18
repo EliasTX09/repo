@@ -168,9 +168,13 @@ def belongs_to_league(item, league):
     ]
     fields = [f if isinstance(f, str) else "" for f in fields]
     content = " ".join(fields).lower()
+    league_name = league.lower()
+
+    if league_name == "2. bundesliga":
+        # Flexibles Matching für 2. Bundesliga
+        return "2" in content and "bundesliga" in content
 
     is_female = any(word in content for word in ["frau", "frauen", "women"])
-    league_name = league.lower()
 
     if "champions league" in league_name:
         return any(kw in content for kw in ["champions league", "champions-league"])
@@ -179,38 +183,22 @@ def belongs_to_league(item, league):
         return league_name.replace(" frauen", "") in content
     if "frauen" not in league_name and not is_female:
         return league_name in content
-    return False
 
-def is_excluded_from_bundesliga(item, league_name):
-    fields = [
-        item.get("title", ""),
-        item.get("league", ""),
-        item.get("sport", ""),
-    ]
-    fields = [f if isinstance(f, str) else "" for f in fields]
-    content = " ".join(fields).lower()
-    EXCLUDES = [
-        "tipico bundesliga",
-        "bundesliga women",
-        "planet pure bundesliga women",
-        "austria"
-    ]
-    # 2. Bundesliga nur ausschließen, wenn es die "Bundesliga" Liga ist
-    if league_name == "Bundesliga":
-        EXCLUDES.append("2. bundesliga")
-    return any(excl in content for excl in EXCLUDES)
+    return False
 
 def list_games_for_league(league):
     try:
         url = URLS.get(league)
         if not url:
-            raise Exception("Keine URL für Liga gefunden.")
+            xbmcgui.Dialog().notification("Fehler", f"Keine URL für Liga '{league}' gefunden.", xbmcgui.NOTIFICATION_ERROR)
+            return
         response = urllib.request.urlopen(url)
         data = json.loads(response.read())
         items = data.get("items", [])
 
         shown_titles = set()
 
+        # Neu laden & Suche Items ...
         reload_item = xbmcgui.ListItem(label="[COLORred]--------- [COLOR khaki]Neu laden[/COLOR][COLORred] ---------[/COLOR]")
         xbmcplugin.addDirectoryItem(handle=HANDLE, url="plugin://plugin.video.madtitansports/refresh_menu", listitem=reload_item, isFolder=False)
 
@@ -227,10 +215,10 @@ def list_games_for_league(league):
                 continue
             if not belongs_to_league(item, league):
                 continue
-            if league == "Bundesliga" and is_excluded_from_bundesliga(item,league):
-                continue
-             
 
+            # Filter nur für Bundesliga (nicht für 2. Bundesliga)
+            if league == "Bundesliga" and is_excluded_from_bundesliga(item, league):
+                continue
 
             title = item.get("title", "")
             title = replace_time_in_title(title)
@@ -247,6 +235,7 @@ def list_games_for_league(league):
 
     except Exception as e:
         xbmcgui.Dialog().notification("Fehler", f"Fehler bei {league}: {str(e)}", xbmcgui.NOTIFICATION_ERROR)
+
 
 def list_streams(league, id):
     try:
