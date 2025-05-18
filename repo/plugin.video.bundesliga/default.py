@@ -7,10 +7,9 @@ import xbmcgui
 import re
 from datetime import datetime
 import pytz
+import xbmcaddon
+import xbmc
 
-
-HANDLE = int(sys.argv[1])
-BASE_URL = sys.argv[0]
 
 
 HANDLE = int(sys.argv[1])
@@ -24,7 +23,32 @@ _JSON_URL_URLS = "https://raw.githubusercontent.com/EliasTX09/json/main/json.jso
 IMAGES_JSON_URL =  "https://raw.githubusercontent.com/EliasTX09/json/main/IMAGES"
 
 
-SENDER_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender.json"
+
+def play_stream(raw_url):
+    # raw_url ist z.B.: "http://example.com/stream.m3u8|User-Agent=MyAgent"
+    url, *header_part = raw_url.split("|")
+    headers = {}
+
+    if header_part:
+        # header_part[0] = "User-Agent=MyAgent"
+        # evtl. mehrere Header durch & getrennt (z.B. User-Agent=xxx&Referer=yyy)
+        for h in header_part[0].split("&"):
+            if "=" in h:
+                key, value = h.split("=", 1)
+                headers[key] = value
+
+    li = xbmcgui.ListItem(path=url)
+    li.setProperty("IsPlayable", "true")
+
+    # Header über Kodi-Property setzen (funktioniert bei manchen InputStream-Addons)
+    if headers:
+        li.setProperty("inputstream.adaptive.manifest_headers", json.dumps(headers))
+        li.setProperty("inputstream.adaptive.stream_headers", json.dumps(headers))
+
+    xbmcplugin.setResolvedUrl(HANDLE, True, li)
+
+
+
 
 def load_json_from_url(url):
     try:
@@ -37,16 +61,37 @@ def load_json_from_url(url):
 
 # URLs und Senderliste laden
 URLS = load_json_from_url(_JSON_URL_URLS) or {}
-SENDER = load_json_from_url(SENDER_JSON_URL) or []
 IMAGES = load_json_from_url(IMAGES_JSON_URL) or {}
 
 def list_sender():
-    for sender in SENDER:
-        li = xbmcgui.ListItem(label=sender["name"])
-        li.setProperty("IsPlayable", "true")
-        li.setArt({"thumb": sender["image"], "icon": sender["image"], "poster": sender["image"]})
-        xbmcplugin.addDirectoryItem(handle=HANDLE, url=sender["url"], listitem=li, isFolder=False)
-    xbmcplugin.endOfDirectory(HANDLE)
+    m3u_url = "https://raw.githubusercontent.com/EliasTX09/json/refs/heads/main/sender.m3u"  # <-- HIER DEINE M3U-URL EINTRAGEN
+
+    try:
+        response = urllib.request.urlopen(m3u_url)
+        lines = response.read().decode("utf-8").splitlines()
+
+        for i in range(len(lines)):
+            if lines[i].startswith("#EXTINF"):
+                name = lines[i].split(",", 1)[1].strip()
+                stream_url = lines[i + 1].strip()
+
+                li = xbmcgui.ListItem(label=name)
+                li.setProperty("IsPlayable", "true")
+
+                xbmcplugin.addDirectoryItem(
+                    handle=HANDLE,
+                    url=f"{BASE_URL}?action=play&url={urllib.parse.quote(urllib.parse.unquote(stream_url))}",
+                    listitem=li,
+                    isFolder=False
+                )
+        xbmcplugin.endOfDirectory(HANDLE)
+
+    except Exception as e:
+        xbmcgui.Dialog().notification("M3U-Fehler", str(e), xbmcgui.NOTIFICATION_ERROR)
+
+
+
+
 
 def convert_time_string_with_pytz(et_string):
     try:
@@ -208,16 +253,22 @@ def list_streams(league, id):
             raise Exception("Keine Streams gefunden.")
 
         for link in links:
+            # Ursprüngliche URL ohne Header-Anhang
+            base_link = link.split("(")[0]
+            url = f"{BASE_URL}?action=play&url={urllib.parse.quote(base_link)}"
+
             match = re.search(r'\[COLOR.*?\](.*?)\[/COLOR\]', link)
             sender = match.group(1).split(":")[0].strip() if match else "Unbekannt"
+
             li = xbmcgui.ListItem(label=f"[COLORred]{sender}[/COLOR]")
             li.setProperty("IsPlayable", "true")
-            xbmcplugin.addDirectoryItem(handle=HANDLE, url=link.split("(")[0], listitem=li, isFolder=False)
+            xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=False)
 
         xbmcplugin.endOfDirectory(HANDLE)
 
     except Exception as e:
         xbmcgui.Dialog().notification("Stream-Fehler", str(e), xbmcgui.NOTIFICATION_ERROR)
+
 
 def router(paramstring):
     params = urllib.parse.parse_qs(paramstring)
@@ -225,6 +276,7 @@ def router(paramstring):
     league = params.get("league", [None])[0]
     id = params.get("id", [None])[0]
     category = params.get("category", [None])[0]
+    stream_url = params.get("url", [None])[0]
 
     if action == "list_games" and league:
         list_games_for_league(league)
@@ -234,8 +286,13 @@ def router(paramstring):
         list_sender()
     elif action == "streams" and league and id:
         list_streams(league, id)
+    elif action == "play" and stream_url:
+        play_stream(stream_url)
     else:
         list_main_menu()
+
+
+
 
 if __name__ == "__main__":
     router(sys.argv[2][1:])
