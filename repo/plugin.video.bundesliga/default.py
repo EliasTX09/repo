@@ -25,7 +25,8 @@ IMAGES_JSON_URL =  "https://raw.githubusercontent.com/EliasTX09/json/main/IMAGES
 
 SENDER_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender.json"
 
-SENDER_ELIAS_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender_test.json"
+SENDER_M3U_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender_test.m3u"
+
 
 
 
@@ -68,37 +69,49 @@ def load_json_from_url(url):
 URLS = load_json_from_url(_JSON_URL_URLS) or {}
 IMAGES = load_json_from_url(IMAGES_JSON_URL) or {}
 
-def list_elias_test():
-    streams = load_json_from_url(SENDER_ELIAS_JSON_URL)
-    if not streams:
-        xbmcgui.Dialog().notification("Fehler", "Test-Sender JSON konnte nicht geladen werden", xbmcgui.NOTIFICATION_ERROR)
+def list_m3u_senders():
+    try:
+        with urllib.request.urlopen(SENDER_M3U_URL) as response:
+            m3u_content = response.read().decode("utf-8")
+
+        lines = m3u_content.splitlines()
+        # M3U Header entfernen (#EXTM3U)
+        if lines[0].strip() == "#EXTM3U":
+            lines = lines[1:]
+
+        i = 0
+        while i < len(lines):
+            if lines[i].startswith("#EXTINF"):
+                # Beispiel: #EXTINF:-1 tvg-logo="logo_url" group-title="Gruppe",Sender Name
+                info_line = lines[i]
+                stream_url = lines[i+1] if i + 1 < len(lines) else ""
+                i += 2
+
+                # Name aus EXTINF extrahieren (nach letztem Komma)
+                name = info_line.split(",")[-1].strip()
+
+                # Logo aus EXTINF extrahieren (optional)
+                logo_match = re.search(r'tvg-logo="([^"]+)"', info_line)
+                logo = logo_match.group(1) if logo_match else ""
+
+                li = xbmcgui.ListItem(label=name)
+                if logo:
+                    li.setArt({"thumb": logo, "icon": logo, "fanart": logo})
+                li.setProperty("IsPlayable", "true")
+                li.setInfo("video", {"title": name})
+
+                play_url = f"{BASE_URL}?action=play&url={urllib.parse.quote(stream_url)}"
+                xbmcplugin.addDirectoryItem(handle=HANDLE, url=play_url, listitem=li, isFolder=False)
+
+            else:
+                i += 1
+
         xbmcplugin.endOfDirectory(HANDLE)
-        return
 
-    for stream in streams:
-        name = stream.get("name", "Unbekannt")
-        logo = stream.get("logo", "")
-        url = stream.get("url", "")
-        headers = stream.get("headers", {})
+    except Exception as e:
+        xbmcgui.Dialog().notification("Fehler", f"M3U konnte nicht geladen werden:\n{str(e)}", xbmcgui.NOTIFICATION_ERROR)
+        xbmcplugin.endOfDirectory(HANDLE)
 
-        li = xbmcgui.ListItem(label=name)
-        li.setArt({"thumb": logo, "icon": logo, "fanart": logo})
-        li.setProperty("IsPlayable", "true")
-        li.setInfo("video", {"title": name})
-
-        # Header dict als JSON-string URL-kodieren, damit es per URL mitgegeben wird
-        headers_json = urllib.parse.quote(json.dumps(headers)) if headers else ""
-
-        play_url = f"{BASE_URL}?action=play&url={urllib.parse.quote(url)}&headers={headers_json}"
-
-        xbmcplugin.addDirectoryItem(
-            handle=HANDLE,
-            url=play_url,
-            listitem=li,
-            isFolder=False
-        )
-
-    xbmcplugin.endOfDirectory(HANDLE)
 
 
 def list_sender():
@@ -182,12 +195,13 @@ def list_main_menu():
     li = xbmcgui.ListItem(label="Sender")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
-    # Neuer Ordner für deine Elias-Sender, gelb eingefärbt
-    url = f"{BASE_URL}?action=list_elias_test"
-    li = xbmcgui.ListItem(label="[COLORyellow]Sender (Elias Test)[/COLORyellow]")
+    # Hier fehlte eine Einrückung
+    url = f"{BASE_URL}?action=list_m3u"
+    li = xbmcgui.ListItem(label="[COLORyellow]Test Sender (NUR ELIAS!!!)[/COLOR]")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
     xbmcplugin.endOfDirectory(HANDLE)
+
 
 
 def list_category(category):
@@ -329,8 +343,8 @@ def router(paramstring):
         list_category(category)
     elif action == "list_sender":
         list_sender()
-    elif action == "list_elias_test":  # Neu: Ordner für deine sender_test_elias.json
-        list_elias_test()
+    elif action == "list_m3u":
+        list_m3u_senders()
     elif action == "streams" and league and id:
         list_streams(league, id)
     elif action == "play" and stream_url:
