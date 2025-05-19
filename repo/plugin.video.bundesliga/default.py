@@ -25,30 +25,32 @@ IMAGES_JSON_URL =  "https://raw.githubusercontent.com/EliasTX09/json/main/IMAGES
 
 SENDER_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender.json"
 
+SENDER_ELIAS_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender_test.json"
 
 
-def play_stream(raw_url):
-    # raw_url ist z.B.: "http://example.com/stream.m3u8|User-Agent=MyAgent"
-    url, *header_part = raw_url.split("|")
+
+def play_stream(raw_url, raw_headers=None):
+    # raw_url z.B. "http://example.com/stream.m3u8"
+    # raw_headers: JSON-codierter String mit Headern
+
     headers = {}
 
-    if header_part:
-        # header_part[0] = "User-Agent=MyAgent"
-        # evtl. mehrere Header durch & getrennt (z.B. User-Agent=xxx&Referer=yyy)
-        for h in header_part[0].split("&"):
-            if "=" in h:
-                key, value = h.split("=", 1)
-                headers[key] = value
+    # Wenn Header als JSON-String mitgegeben wird, parsen
+    if raw_headers:
+        try:
+            headers = json.loads(urllib.parse.unquote(raw_headers))
+        except Exception as e:
+            xbmc.log(f"Fehler beim Parsen der Header: {str(e)}", xbmc.LOGERROR)
 
-    li = xbmcgui.ListItem(path=url)
+    li = xbmcgui.ListItem(path=raw_url)
     li.setProperty("IsPlayable", "true")
 
-    # Header über Kodi-Property setzen (funktioniert bei manchen InputStream-Addons)
     if headers:
         li.setProperty("inputstream.adaptive.manifest_headers", json.dumps(headers))
         li.setProperty("inputstream.adaptive.stream_headers", json.dumps(headers))
 
     xbmcplugin.setResolvedUrl(HANDLE, True, li)
+
 
 
 
@@ -66,10 +68,10 @@ def load_json_from_url(url):
 URLS = load_json_from_url(_JSON_URL_URLS) or {}
 IMAGES = load_json_from_url(IMAGES_JSON_URL) or {}
 
-def list_sender():
-    streams = load_json_from_url(SENDER_JSON_URL)
+def list_elias_test():
+    streams = load_json_from_url(SENDER_ELIAS_JSON_URL)
     if not streams:
-        xbmcgui.Dialog().notification("Fehler", "Sender JSON konnte nicht geladen werden", xbmcgui.NOTIFICATION_ERROR)
+        xbmcgui.Dialog().notification("Fehler", "Test-Sender JSON konnte nicht geladen werden", xbmcgui.NOTIFICATION_ERROR)
         xbmcplugin.endOfDirectory(HANDLE)
         return
 
@@ -77,20 +79,60 @@ def list_sender():
         name = stream.get("name", "Unbekannt")
         logo = stream.get("logo", "")
         url = stream.get("url", "")
+        headers = stream.get("headers", {})
 
         li = xbmcgui.ListItem(label=name)
         li.setArt({"thumb": logo, "icon": logo, "fanart": logo})
         li.setProperty("IsPlayable", "true")
         li.setInfo("video", {"title": name})
 
+        # Header dict als JSON-string URL-kodieren, damit es per URL mitgegeben wird
+        headers_json = urllib.parse.quote(json.dumps(headers)) if headers else ""
+
+        play_url = f"{BASE_URL}?action=play&url={urllib.parse.quote(url)}&headers={headers_json}"
+
         xbmcplugin.addDirectoryItem(
             handle=HANDLE,
-            url=f"{BASE_URL}?action=play&url={urllib.parse.quote(url)}",
+            url=play_url,
             listitem=li,
             isFolder=False
         )
 
     xbmcplugin.endOfDirectory(HANDLE)
+
+
+def list_sender():
+    # Haupt-Sender
+    streams = load_json_from_url(SENDER_JSON_URL)
+    if not streams:
+        xbmcgui.Dialog().notification("Fehler", "Sender JSON konnte nicht geladen werden", xbmcgui.NOTIFICATION_ERROR)
+    else:
+        for stream in streams:
+            name = stream.get("name", "Unbekannt")
+            logo = stream.get("logo", "")
+            url = stream.get("url", "")
+
+            li = xbmcgui.ListItem(label=name)
+            li.setArt({"thumb": logo, "icon": logo, "fanart": logo})
+            li.setProperty("IsPlayable", "true")
+            li.setInfo("video", {"title": name})
+
+            xbmcplugin.addDirectoryItem(
+                handle=HANDLE,
+                url=f"{BASE_URL}?action=play&url={urllib.parse.quote(url)}",
+                listitem=li,
+                isFolder=False
+            )
+
+    # Elias-Test-Sender als eigener gelber Ordner
+    test_streams = load_json_from_url(SENDER_ELIAS_JSON_URL)
+    if test_streams:
+        li = xbmcgui.ListItem(label="[COLORyellow]Sender (Elias Test)[/COLOR]")
+        test_url = f"{BASE_URL}?action=list_elias_test"
+        xbmcplugin.addDirectoryItem(handle=HANDLE, url=test_url, listitem=li, isFolder=True)
+
+    xbmcplugin.endOfDirectory(HANDLE)
+
 
 
 
@@ -140,7 +182,13 @@ def list_main_menu():
     li = xbmcgui.ListItem(label="Sender")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
+    # Neuer Ordner für deine Elias-Sender, gelb eingefärbt
+    url = f"{BASE_URL}?action=list_elias_test"
+    li = xbmcgui.ListItem(label="[COLORyellow]Sender (Elias Test)[/COLORyellow]")
+    xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
+
     xbmcplugin.endOfDirectory(HANDLE)
+
 
 def list_category(category):
     for league in URLS.keys():
@@ -273,6 +321,7 @@ def router(paramstring):
     id = params.get("id", [None])[0]
     category = params.get("category", [None])[0]
     stream_url = params.get("url", [None])[0]
+    headers = params.get("headers", [None])[0]  # Neu: Header-Parameter
 
     if action == "list_games" and league:
         list_games_for_league(league)
@@ -280,12 +329,15 @@ def router(paramstring):
         list_category(category)
     elif action == "list_sender":
         list_sender()
+    elif action == "list_elias_test":  # Neu: Ordner für deine sender_test_elias.json
+        list_elias_test()
     elif action == "streams" and league and id:
         list_streams(league, id)
     elif action == "play" and stream_url:
-        play_stream(stream_url)
+        play_stream(stream_url, raw_headers=headers)
     else:
         list_main_menu()
+
 
 
 
