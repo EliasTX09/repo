@@ -115,27 +115,23 @@ def list_m3u_senders():
 
 
 def list_sender():
-    # Hauptsender aus sender.json
     streams = load_json_from_url(SENDER_JSON_URL)
     if streams:
         for stream in streams:
             li = xbmcgui.ListItem(label=stream['name'])
-            li.setArt({'icon': stream.get('icon', ''), 'thumb': stream.get('icon', '')})
-            url = f"{BASE_URL}?action=play_stream&stream_url={urllib.parse.quote_plus(stream['url'])}"
+            li.setArt({'icon': stream.get('logo', ''), 'thumb': stream.get('logo', '')})
+            url = stream['url']
+            li.setProperty("IsPlayable", "true")
             xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=False)
     else:
         xbmcgui.Dialog().notification("Fehler", "Sender JSON konnte nicht geladen werden", xbmcgui.NOTIFICATION_ERROR)
 
-    # Test-Sender aus M3U-Datei
+    # Test-M3U
     li = xbmcgui.ListItem(label="[COLORyellow]Test Sender (M3U)[/COLOR]")
     test_url = f"{BASE_URL}?action=list_m3u"
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=test_url, listitem=li, isFolder=True)
 
     xbmcplugin.endOfDirectory(HANDLE)
-
-
-
-
 
 
 
