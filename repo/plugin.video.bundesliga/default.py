@@ -115,36 +115,24 @@ def list_m3u_senders():
 
 
 def list_sender():
-    # Haupt-Sender
+    # Hauptsender aus sender.json
     streams = load_json_from_url(SENDER_JSON_URL)
-    if not streams:
-        xbmcgui.Dialog().notification("Fehler", "Sender JSON konnte nicht geladen werden", xbmcgui.NOTIFICATION_ERROR)
-    else:
+    if streams:
         for stream in streams:
-            name = stream.get("name", "Unbekannt")
-            logo = stream.get("logo", "")
-            url = stream.get("url", "")
+            li = xbmcgui.ListItem(label=stream['name'])
+            li.setArt({'icon': stream.get('icon', ''), 'thumb': stream.get('icon', '')})
+            url = f"{BASE_URL}?action=play_stream&stream_url={urllib.parse.quote_plus(stream['url'])}"
+            xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=False)
+    else:
+        xbmcgui.Dialog().notification("Fehler", "Sender JSON konnte nicht geladen werden", xbmcgui.NOTIFICATION_ERROR)
 
-            li = xbmcgui.ListItem(label=name)
-            li.setArt({"thumb": logo, "icon": logo, "fanart": logo})
-            li.setProperty("IsPlayable", "true")
-            li.setInfo("video", {"title": name})
-
-            xbmcplugin.addDirectoryItem(
-                handle=HANDLE,
-                url=f"{BASE_URL}?action=play&url={urllib.parse.quote(url)}",
-                listitem=li,
-                isFolder=False
-            )
-
-    # Elias-Test-Sender als eigener gelber Ordner
-    test_streams = load_json_from_url(SENDER_ELIAS_JSON_URL)
-    if test_streams:
-        li = xbmcgui.ListItem(label="[COLORyellow]Sender (Elias Test)[/COLOR]")
-        test_url = f"{BASE_URL}?action=list_elias_test"
-        xbmcplugin.addDirectoryItem(handle=HANDLE, url=test_url, listitem=li, isFolder=True)
+    # Test-Sender aus M3U-Datei
+    li = xbmcgui.ListItem(label="[COLORyellow]Test Sender (M3U)[/COLOR]")
+    test_url = f"{BASE_URL}?action=list_m3u"
+    xbmcplugin.addDirectoryItem(handle=HANDLE, url=test_url, listitem=li, isFolder=True)
 
     xbmcplugin.endOfDirectory(HANDLE)
+
 
 
 
