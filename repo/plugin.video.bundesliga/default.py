@@ -112,10 +112,6 @@ def list_test_menu():
     li_m3u = xbmcgui.ListItem(label="[COLORyellow]Test Sender (NUR ELIAS!!!)[/COLOR]")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url_m3u, listitem=li_m3u, isFolder=True)
 
-    url = f"{BASE_URL}?action=show_stream_info"
-    li = xbmcgui.ListItem(label="Stream Test")
-    xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=False)
-    xbmcplugin.endOfDirectory(HANDLE)
     
     # Eintrag: Stream durch Zahl öffnen
     input_url = f"{BASE_URL}?action=open_number_input"
@@ -247,9 +243,7 @@ def open_number_input():
     if keyboard:
         stream_number = keyboard.strip()
         if stream_number.isdigit():
-            stream_url = f"https://daddylive.dad/stream/stream-{stream_number}.php"
-            plugin_url = f"plugin://plugin.video.madtitansports/sportjetextractors/play?urls={stream_url}"
-            xbmc.executebuiltin(f'RunPlugin({plugin_url})')
+            play_daddylive_stream(stream_number)
         else:
             xbmcgui.Dialog().notification("Fehler", "Ungültige Zahl eingegeben!", xbmcgui.NOTIFICATION_ERROR)
 

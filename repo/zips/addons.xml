@@ -17,7 +17,7 @@
             <fanart>fanart.jpg</fanart>
         </assets>
     </extension>
-</addon><addon id="plugin.video.bundesliga" name="Fussball" version="5.3d" provider-name="Elias">
+</addon><addon id="plugin.video.bundesliga" name="Fussball" version="5.3e" provider-name="Elias">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
     <import addon="pvr.iptvsimple" />
