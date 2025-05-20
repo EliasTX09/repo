@@ -428,13 +428,17 @@ def router(paramstring):
     elif action == "show_stream_info":
         show_stream_info()
     elif action == "play_daddy" and stream_url:
-         play_daddylive_stream(stream_url)
+        play_daddylive_stream(stream_url)
     elif action == "enter_daddy_number":
-       keyboard = xbmcgui.Dialog().input("Stream-Nummer eingeben", type=xbmcgui.INPUT_NUMERIC)
-    if keyboard and keyboard.isdigit():
-        xbmc.executebuiltin(f"RunPlugin({BASE_URL}?action=play_daddy&url={keyboard})")
+        keyboard = xbmcgui.Dialog().input("Stream-Nummer eingeben", type=xbmcgui.INPUT_NUMERIC)
+        if keyboard and keyboard.isdigit():
+            xbmc.executebuiltin(f"RunPlugin({BASE_URL}?action=play_daddy&url={keyboard})")
+        else:
+            xbmcgui.Dialog().notification("Fehler", "Ungültige Eingabe", xbmcgui.NOTIFICATION_ERROR)
     else:
         list_main_menu()
+
+
 
 
 
