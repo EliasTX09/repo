@@ -126,10 +126,6 @@ def list_sender():
     else:
         xbmcgui.Dialog().notification("Fehler", "Sender JSON konnte nicht geladen werden", xbmcgui.NOTIFICATION_ERROR)
 
-    # Test-M3U
-    li = xbmcgui.ListItem(label="[COLORyellow]Test Sender (M3U)[/COLOR]")
-    test_url = f"{BASE_URL}?action=list_m3u"
-    xbmcplugin.addDirectoryItem(handle=HANDLE, url=test_url, listitem=li, isFolder=True)
 
     xbmcplugin.endOfDirectory(HANDLE)
 
