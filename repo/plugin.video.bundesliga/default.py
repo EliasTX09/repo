@@ -88,6 +88,11 @@ def list_test_menu():
     li_m3u = xbmcgui.ListItem(label="[COLORyellow]Test Sender (NUR ELIAS!!!)[/COLOR]")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url_m3u, listitem=li_m3u, isFolder=True)
 
+    url = f"{BASE_URL}?action=show_stream_info"
+    li = xbmcgui.ListItem(label="Stream Test")
+    xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=False)
+    xbmcplugin.endOfDirectory(HANDLE)
+    
     # Eintrag: Stream durch Zahl öffnen
     input_url = f"{BASE_URL}?action=open_number_input"
     li_input = xbmcgui.ListItem(label="[COLORlime]Zahl eingeben für Stream[/COLOR]")
@@ -96,7 +101,24 @@ def list_test_menu():
 
     xbmcplugin.endOfDirectory(HANDLE)
 
-
+def show_stream_info():
+    number = xbmcgui.Dialog().input("Stream Test")
+    if not number:
+        return
+    
+    m3u8_url = f"https://ddy6new.newkso.ru/ddy6/premium{number}/mono.m3u8"
+    headers = {
+        "Referer": "https://alldownplay.xyz/",
+        "Origin": "https://alldownplay.xyz",
+        "Connection": "Keep-Alive",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
+    }
+    
+    # Header als String formatiert
+    headers_str = "\n".join(f"{k}: {v}" for k, v in headers.items())
+    
+    message = f"M3U8 URL:\n{m3u8_url}\n\nHeaders:\n{headers_str}"
+    xbmcgui.Dialog().textviewer("Stream Info", message)
 
 def list_m3u_senders():
     try:
@@ -218,10 +240,6 @@ def list_main_menu():
 
     url = f"{BASE_URL}?action=list_sender"
     li = xbmcgui.ListItem(label="Sender")
-    xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
-
-    url = f"{BASE_URL}?action=list_m3u"
-    li = xbmcgui.ListItem(label="[COLORyellow]Test Sender (NUR ELIAS!!!)[/COLOR]")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
     # Neuer Test-Ordner
@@ -383,6 +401,8 @@ def router(paramstring):
         list_test_menu()
     elif action == "open_number_input":
         open_number_input()
+    elif action == "show_stream_info":
+        show_stream_info()
     else:
         list_main_menu()
 
