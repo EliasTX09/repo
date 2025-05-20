@@ -69,6 +69,35 @@ def load_json_from_url(url):
 URLS = load_json_from_url(_JSON_URL_URLS) or {}
 IMAGES = load_json_from_url(IMAGES_JSON_URL) or {}
 
+def show_custom_stream_input():
+    keyboard = xbmc.Keyboard('', 'Gib eine Stream-ID ein (z. B. 426)')
+    keyboard.doModal()
+    if keyboard.isConfirmed():
+        stream_id = keyboard.getText()
+        if stream_id.isdigit():
+            stream_url = f"https://daddylive.dad/stream/stream-{stream_id}.php"
+            play_url = f"plugin://plugin.video.madtitansports/sportjetextractors/play?urls={stream_url}"
+            xbmc.executebuiltin(f'PlayMedia({play_url})')
+        else:
+            xbmcgui.Dialog().notification('Ungültige Eingabe', 'Nur Zahlen erlaubt.', xbmcgui.NOTIFICATION_ERROR)
+
+
+def list_test_menu():
+    # Eintrag: Test Sender (M3U)
+    url_m3u = f"{BASE_URL}?action=list_m3u"
+    li_m3u = xbmcgui.ListItem(label="[COLORyellow]Test Sender (NUR ELIAS!!!)[/COLOR]")
+    xbmcplugin.addDirectoryItem(handle=HANDLE, url=url_m3u, listitem=li_m3u, isFolder=True)
+
+    # Eintrag: Stream durch Zahl öffnen
+    input_url = f"{BASE_URL}?action=open_number_input"
+    li_input = xbmcgui.ListItem(label="[COLORlime]Zahl eingeben für Stream[/COLOR]")
+    li_input.setArt({'icon': '', 'thumb': '', 'fanart': ''})
+    xbmcplugin.addDirectoryItem(handle=HANDLE, url=input_url, listitem=li_input, isFolder=False)
+
+    xbmcplugin.endOfDirectory(HANDLE)
+
+
+
 def list_m3u_senders():
     try:
         with urllib.request.urlopen(SENDER_M3U_URL) as response:
@@ -165,6 +194,22 @@ def replace_time_in_title(title):
         return title.replace(original_time, f"[COLORyellow]{converted}[/COLOR]")
     return title
 
+
+
+def open_number_input():
+    keyboard = xbmcgui.Dialog().input("Stream-Nummer eingeben", type=xbmcgui.INPUT_NUMERIC)
+    if keyboard:
+        stream_number = keyboard.strip()
+        if stream_number.isdigit():
+            stream_url = f"https://daddylive.dad/stream/stream-{stream_number}.php"
+            plugin_url = f"plugin://plugin.video.madtitansports/sportjetextractors/play?urls={stream_url}"
+            xbmc.executebuiltin(f'RunPlugin({plugin_url})')
+        else:
+            xbmcgui.Dialog().notification("Fehler", "Ungültige Zahl eingegeben!", xbmcgui.NOTIFICATION_ERROR)
+
+
+
+
 def list_main_menu():
     for category in ["Männerligen", "Frauenligen"]:
         url = f"{BASE_URL}?action=list_category&category={urllib.parse.quote(category)}"
@@ -175,12 +220,17 @@ def list_main_menu():
     li = xbmcgui.ListItem(label="Sender")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
-    # Hier fehlte eine Einrückung
     url = f"{BASE_URL}?action=list_m3u"
     li = xbmcgui.ListItem(label="[COLORyellow]Test Sender (NUR ELIAS!!!)[/COLOR]")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
+    # Neuer Test-Ordner
+    url = f"{BASE_URL}?action=test_menu"
+    li = xbmcgui.ListItem(label="[B][COLORorange]Test[/COLOR][/B]")
+    xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
+
     xbmcplugin.endOfDirectory(HANDLE)
+
 
 
 
@@ -329,6 +379,10 @@ def router(paramstring):
         list_streams(league, id)
     elif action == "play" and stream_url:
         play_stream(stream_url, raw_headers=headers)
+    elif action == "test_menu":
+        list_test_menu()
+    elif action == "open_number_input":
+        open_number_input()
     else:
         list_main_menu()
 
