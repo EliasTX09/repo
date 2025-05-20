@@ -9,6 +9,8 @@ from datetime import datetime
 import pytz
 import xbmcaddon
 import xbmc
+from resources.lib import daddylive
+
 
 
 
@@ -54,6 +56,22 @@ def play_stream(raw_url, raw_headers=None):
 
 
 
+def play_daddylive_stream(stream_number):
+    url = f"https://daddylive.dad/stream/stream-{stream_number}.php"
+    
+    m3u8_url, headers = daddylive.get_m3u8_and_headers(url)
+    
+    li = xbmcgui.ListItem(path=m3u8_url)
+    li.setProperty("IsPlayable", "true")
+    li.setProperty("inputstream.adaptive.manifest_type", "hls")
+
+    if headers:
+        li.setProperty("inputstream.adaptive.manifest_headers", json.dumps(headers))
+        li.setProperty("inputstream.adaptive.stream_headers", json.dumps(headers))
+    
+    xbmcplugin.setResolvedUrl(HANDLE, True, li)
+
+
 
 
 def load_json_from_url(url):
@@ -83,6 +101,12 @@ def show_custom_stream_input():
 
 
 def list_test_menu():
+   
+    daddy_input_url = f"{BASE_URL}?action=enter_daddy_number"
+    li_input = xbmcgui.ListItem(label="[COLORlightblue]DaddyLive Streamnummer eingeben[/COLOR]")
+    li_input.setProperty("IsPlayable", "false")
+    xbmcplugin.addDirectoryItem(handle=HANDLE, url=daddy_input_url, listitem=li_input, isFolder=False)
+
     # Eintrag: Test Sender (M3U)
     url_m3u = f"{BASE_URL}?action=list_m3u"
     li_m3u = xbmcgui.ListItem(label="[COLORyellow]Test Sender (NUR ELIAS!!!)[/COLOR]")
@@ -403,6 +427,12 @@ def router(paramstring):
         open_number_input()
     elif action == "show_stream_info":
         show_stream_info()
+    elif action == "play_daddy" and stream_url:
+         play_daddylive_stream(stream_url)
+    elif action == "enter_daddy_number":
+       keyboard = xbmcgui.Dialog().input("Stream-Nummer eingeben", type=xbmcgui.INPUT_NUMERIC)
+    if keyboard and keyboard.isdigit():
+        xbmc.executebuiltin(f"RunPlugin({BASE_URL}?action=play_daddy&url={keyboard})")
     else:
         list_main_menu()
 
