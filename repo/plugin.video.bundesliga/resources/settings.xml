@@ -1,0 +1,9 @@
+<settings>
+    <category label="Allgemein">
+        <setting id="json_source"
+                 type="enum"
+                 label="JSON-Quelle wählen"
+                 values="m4uf|m4ul"
+                 default="m4ul" />
+    </category>
+</settings>

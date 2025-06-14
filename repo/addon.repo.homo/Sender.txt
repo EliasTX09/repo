@@ -1,0 +1,176 @@
+[
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR red]SKY SPORT BUNDESLIGA[/COLOR]",
+    "thumbnail": "https://lo1.in/ger/skyb.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/29202.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/29201.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR red]SKY SPORT BUNDESLIGA[/COLOR] 1",
+    "thumbnail": "https://lo1.in/ger/skyspd1.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/164351.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/164494.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR red]SKY SPORT BUNDESLIGA[/COLOR] 2",
+    "thumbnail": "https://lo1.in/ger/skyspd2.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/166401.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16243.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR red]SKY SPORT BUNDESLIGA[/COLOR] 3",
+    "thumbnail": "https://lo1.in/ger/skyspd3.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/166402.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16242.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR red]SKY SPORT BUNDESLIGA[/COLOR] 4",
+    "thumbnail": "https://lo1.in/ger/skyspd4.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/166403.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16241.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR red]SKY SPORT BUNDESLIGA[/COLOR] 5",
+    "thumbnail": "https://lo1.in/ger/skyspd5.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/166404.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16240.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR red]SKY SPORT BUNDESLIGA[/COLOR] 6",
+    "thumbnail": "https://lo1.in/ger/skyspd6.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/166405.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16239.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR red]SKY SPORT BUNDESLIGA[/COLOR] 7",
+    "thumbnail": "https://lo1.in/ger/skyspd7.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/166406.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16238.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR red]SKY SPORT BUNDESLIGA[/COLOR] 8",
+    "thumbnail": "https://lo1.in/ger/skyspd8.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/166407.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16237.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR red]SKY SPORT BUNDESLIGA[/COLOR] 9",
+    "thumbnail": "https://lo1.in/ger/skyspd9.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/400201095.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/322997.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR red]SKY SPORT BUNDESLIGA[/COLOR] 10",
+    "thumbnail": "https://lo1.in/ger/skyspd10.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/400201094.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16235.m3u8"
+  },
+ {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 1",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/156480.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 2",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/156479.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 3",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5584.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 4",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5583.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 5",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5582.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 6",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5581.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 7",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5580.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 8",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5579.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 9",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5578.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 10",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5577.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 11",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5576.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 12",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5575.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 13",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5574.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 14",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5573.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 15",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5572.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 16",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5571.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 17",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5570.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 18",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5569.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 19",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5568.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] [COLOR yellow]DAZN[/COLOR] 20",
+    "thumbnail": "https://lo1.in/it/dzn.png",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/5567.m3u8"
+  },
+  {
+    "title": "[COLOR black]D[/COLOR][COLOR red]E[/COLOR][COLOR yellow]U[/COLOR] [COLOR lime]|[/COLOR] NITRO",
+    "thumbnail": "https://lo1.in/ger/nitro.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/164255.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/164398.m3u8",
+    "link(SD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/62802.m3u8",
+    "link(HEVC)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/164111.m3u8"
+  }
+]

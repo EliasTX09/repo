@@ -1,0 +1,90 @@
+[
+  {
+    "type": "item",
+    "group": "EU | GERMANY",
+    "title": "[COLOR lime]Sky Sport Bundesliga[/COLOR]",
+    "thumbnail": "https://lo1.in/ger/skyb.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/29202.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/164494.m3u8"
+  },
+  {
+    "type": "item",
+    "group": "EU | GERMANY",
+    "title": "[COLOR lime]Sky Sport Bundesliga 1[/COLOR]",
+    "thumbnail": "https://lo1.in/ger/skyspd1.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/164351.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/164494.m3u8"
+  },
+  {
+    "type": "item",
+    "group": "EU | GERMANY",
+    "title": "[COLOR lime]Sky Sport Bundesliga 2[/COLOR]",
+    "thumbnail": "https://lo1.in/ger/skyspd2.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/166401.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16243.m3u8"
+  },
+  {
+    "type": "item",
+    "group": "EU | GERMANY",
+    "title": "[COLOR lime]Sky Sport Bundesliga 3[/COLOR]",
+    "thumbnail": "https://lo1.in/ger/skyspd3.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/166402.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16242.m3u8"
+  },
+  {
+    "type": "item",
+    "group": "EU | GERMANY",
+    "title": "[COLOR lime]Sky Sport Bundesliga 4[/COLOR]",
+    "thumbnail": "https://lo1.in/ger/skyspd4.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/166403.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16241.m3u8"
+  },
+  {
+    "type": "item",
+    "group": "EU | GERMANY",
+    "title": "[COLOR lime]Sky Sport Bundesliga 5[/COLOR]",
+    "thumbnail": "https://lo1.in/ger/skyspd5.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/166404.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16240.m3u8"
+  },
+  {
+    "type": "item",
+    "group": "EU | GERMANY",
+    "title": "[COLOR lime]Sky Sport Bundesliga 6[/COLOR]",
+    "thumbnail": "https://lo1.in/ger/skyspd6.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/166405.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16239.m3u8"
+  },
+  {
+    "type": "item",
+    "group": "EU | GERMANY",
+    "title": "[COLOR lime]Sky Sport Bundesliga 7[/COLOR]",
+    "thumbnail": "https://lo1.in/ger/skyspd7.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/166406.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16238.m3u8"
+  },
+  {
+    "type": "item",
+    "group": "EU | GERMANY",
+    "title": "[COLOR lime]Sky Sport Bundesliga 8[/COLOR]",
+    "thumbnail": "https://lo1.in/ger/skyspd8.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/166407.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16237.m3u8"
+  },
+  {
+    "type": "item",
+    "group": "EU | GERMANY",
+    "title": "[COLOR lime]Sky Sport Bundesliga 9[/COLOR]",
+    "thumbnail": "https://lo1.in/ger/skyspd9.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/400201095.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/322997.m3u8"
+  },
+  {
+    "type": "item",
+    "group": "EU | GERMANY",
+    "title": "[COLOR lime]Sky Sport Bundesliga 10[/COLOR]",
+    "thumbnail": "https://lo1.in/ger/skyspd10.png",
+    "link(FHD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/400201094.m3u8",
+    "link(HD)": "http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/16235.m3u8"
+  }
+]
