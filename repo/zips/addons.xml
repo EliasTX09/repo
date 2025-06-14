@@ -17,7 +17,7 @@
             <fanart>fanart.jpg</fanart>
         </assets>
     </extension>
-</addon><addon id="plugin.video.bundesliga" name="Fussball" version="7.8" provider-name="Elias">
+</addon><addon id="plugin.video.bundesliga" name="Fussball" version="7.9" provider-name="Elias">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
     <import addon="pvr.iptvsimple" />
@@ -31,13 +31,9 @@
     <import addon="script.module.jetextractors" />
     <import addon="script.module.pytz" />
     <import addon="plugin.video.jetproxy" optional="true" />
-    <import addon="inputstream.ffmpegdirect" />
-    
-    <import addon="inputstream.adaptive" />
     <import addon="script.module.pyamf" />
     
     <import addon="script.module.tabulate" />    
-    <import addon="plugin.video.madtitansports" />
     <import addon="script.module.beautifulsoup4" />
     <import addon="script.module.dateutil" />
     <import addon="script.module.soupsieve" />
