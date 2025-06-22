@@ -8,5 +8,3 @@ __all__ = [
     if not filename.startswith("__") and filename.endswith(".py")
 ]
 from . import *
-from .daddylive import Daddylive
-
