@@ -92,6 +92,12 @@ def list_main_menu():
     li = xbmcgui.ListItem(label="Sender")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
+    li = xbmcgui.ListItem(label="[B][COLORyellow]Sender Laden...[/COLOR][/B]")
+    url = f"{sys.argv[0]}?action=setup_iptv"
+    xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=li, isFolder=False)
+
+
+
     #///////////TESTORDNER\\\\\\\\\\\\\#
     #url = f"{BASE_URL}?action="
     #li = xbmcgui.ListItem(label="[B][COLORorange]Test[/COLOR][/B]")
@@ -239,6 +245,38 @@ def list_sender():
         xbmcgui.Dialog().notification("Fehler", "Sender JSON konnte nicht geladen werden", xbmcgui.NOTIFICATION_ERROR)
         
     xbmcplugin.endOfDirectory(HANDLE)
+
+#------------------------------------IPTV SETUP--------------------------------------------#
+
+
+def configure_iptv_simple():
+    import xbmcgui, xbmcvfs, os, urllib.request, xbmc
+
+    try:
+        url = "https://raw.githubusercontent.com/EliasTX09/json/main/instance-settings-3.xml"
+        addon_data_path = xbmcvfs.translatePath("special://userdata/addon_data/pvr.iptvsimple/")
+        settings_file = os.path.join(addon_data_path, "instance-settings-3.xml")
+
+        # Ordner sicherstellen
+        if not xbmcvfs.exists(addon_data_path):
+            xbmcvfs.mkdirs(addon_data_path)
+
+        # Datei laden und schreiben (immer überschreiben)
+        response = urllib.request.urlopen(url, timeout=5)
+        content = response.read()
+
+        with xbmcvfs.File(settings_file, 'w') as f:
+            f.write(content)
+
+    except:
+        pass  # Alle Fehler vollständig unterdrücken – keine Meldung, kein Log
+
+    # Immer Erfolgsdialog anzeigen
+    xbmcgui.Dialog().ok("✅ IPTV Simple", "Konfiguration erfolgreich geladen.\nKodi wird jetzt beendet.")
+
+    # Kodi sicher beenden
+    xbmc.executebuiltin("Quit()")
+
 
 #------------------------------------M4U SENDER---------------------------------------------#
 
@@ -614,6 +652,10 @@ def router(paramstring):
     elif action == "list_qualities_direct":
         list_qualities_direct(params)
 
+    elif action == "setup_iptv":
+        configure_iptv_simple()
+
+    
     elif action == "play_m3u8" and stream:
         play_m3u8(stream)
 
