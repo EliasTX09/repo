@@ -87,13 +87,12 @@ def list_main_menu():
     li = xbmcgui.ListItem(label="[COLOR lime]100% zuverlässige Sender[/COLOR]")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
-    m3u8_url = "https://s6.hopslan.com/sat11/tracks-v1a1/mono.m3u8"
-    quoted_url = urllib.parse.quote_plus(m3u8_url)
-    plugin_url = f"{sys.argv[0]}?action=play&stream={quoted_url}"
-
-    li = xbmcgui.ListItem(label="[B][COLOR cyan]📺 Sat.1 Direktstream[/COLOR][/B]")
+    plugin_url = f"{sys.argv[0]}?action=play_direct_stream"
+    li = xbmcgui.ListItem(label="[B][COLOR lightgreen]▶ Sat.1 Direktabspielen (NEU)[/COLOR][/B]")
     li.setProperty("IsPlayable", "true")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=plugin_url, listitem=li, isFolder=False)
+
+    xbmcplugin.endOfDirectory(HANDLE)
 
 
 
@@ -561,6 +560,18 @@ def extract_direct_url(plugin_link):
 ######################################################################################################################################
 ######################################################################################################################################
 
+#sat
+def play_direct_stream():
+    stream_url = "https://s6.hopslan.com/sat11/tracks-v1a1/mono.m3u8"
+
+    li = xbmcgui.ListItem(path=stream_url)
+    li.setMimeType("application/vnd.apple.mpegurl")
+    li.setProperty("IsPlayable", "true")
+
+    xbmcplugin.setResolvedUrl(HANDLE, True, li)
+
+
+
 #-------------------------------------M3U8------------------------------------------#
 from http.server import HTTPServer
 from threading import Thread
@@ -668,6 +679,9 @@ def router(paramstring):
     
     elif action == "play_m3u8" and stream:
         play_m3u8(stream)
+    
+    elif action == "play_direct_stream":
+       play_direct_stream()
 
     elif action == "test_menu":
         list_test_menu()
