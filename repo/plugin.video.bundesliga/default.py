@@ -87,13 +87,14 @@ def list_main_menu():
     li = xbmcgui.ListItem(label="[COLOR lime]100% zuverlässige Sender[/COLOR]")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
-    stream_url = urllib.parse.quote_plus("http://expisyyr.iptv-allindig.com:80/live/EMJHD73R/6YC99F9X/164402.m3u8")
-    plugin_url = f"plugin://plugin.video.bundesliga/?action=play&stream={stream_url}"
+    m3u8_url = "https://s6.hopslan.com/sat11/tracks-v1a1/mono.m3u8"
+    quoted_url = urllib.parse.quote_plus(m3u8_url)
+    plugin_url = f"{sys.argv[0]}?action=play&stream={quoted_url}"
 
-    # 🔴 Name hier anpassen:
-    li = xbmcgui.ListItem(label="[B][COLOR red]🔴 Live: Sat 1 HD[/COLOR][/B]")
+    li = xbmcgui.ListItem(label="[B][COLOR cyan]📺 Sat.1 Direktstream[/COLOR][/B]")
     li.setProperty("IsPlayable", "true")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=plugin_url, listitem=li, isFolder=False)
+
 
 
 
