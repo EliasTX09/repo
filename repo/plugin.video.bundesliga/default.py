@@ -37,7 +37,7 @@ SENDER_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender.
 
 SENDER_M3U_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender_test.m3u"
 
-M4U_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/m4u.json"
+M4U_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/MasterIPTV.json"
 
 HEADER_STRING = (
     "|Referer=https://alldownplay.xyz/" +
@@ -50,7 +50,7 @@ HEADER_STRING = (
 def get_source_url():
     addon = xbmcaddon.Addon()
     mode = addon.getSetting("m4u_mode") or "f"  # Standard: f
-    return f"https://raw.githubusercontent.com/EliasTX09/json/main/m4u{mode}.json"
+    return f"https://raw.githubusercontent.com/EliasTX09/json/main/MasterIPTV.json"
 
 ######################################################################################################################################
 ######################################################################################################################################
@@ -86,15 +86,6 @@ def list_main_menu():
     url = f"{BASE_URL}?action=list_channels"
     li = xbmcgui.ListItem(label="[COLOR lime]100% zuverlässige Sender[/COLOR]")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
-
-    plugin_url = f"{sys.argv[0]}?action=play_direct_stream"
-    li = xbmcgui.ListItem(label="[B][COLOR lightgreen]▶ Sat.1 Direktabspielen (NEU)[/COLOR][/B]")
-    li.setProperty("IsPlayable", "true")
-    xbmcplugin.addDirectoryItem(handle=HANDLE, url=plugin_url, listitem=li, isFolder=False)
-
-    xbmcplugin.endOfDirectory(HANDLE)
-
-
 
 
     url = f"{BASE_URL}?action=list_sender"
@@ -289,24 +280,8 @@ def configure_iptv_simple():
 
 #------------------------------------M4U SENDER---------------------------------------------#
 
-def toggle_source_mode():
-    addon = xbmcaddon.Addon()
-    current = addon.getSetting("m4u_mode") or "f"
-    new = "l" if current == "f" else "f"
-    addon.setSetting("m4u_mode", new)
-    xbmcgui.Dialog().notification("Quelle gewechselt", f"Jetzt aktiv: {new.upper()}", xbmcgui.NOTIFICATION_INFO, 3000)
-
-
 def list_channels():
-    # Menüpunkt zum Umschalten der Quelle einfügen
-    current_mode = xbmcaddon.Addon().getSetting("m4u_mode") or "f"
-    toggle_url = build_url({'action': 'toggle_source'})
-    li = xbmcgui.ListItem(label=f"[Quelle wählen] (aktuell: {current_mode.upper()})")
-    li.setArt({'icon': '', 'thumb': ''})
-    li.setProperty("IsPlayable", "false")
-    xbmcplugin.addDirectoryItem(handle=HANDLE, url=toggle_url, listitem=li, isFolder=False)
-
-    # Jetzt Senderliste laden
+    # Quelle fest holen (z. B. aus GitHub verlinkter JSON)
     M4U_URL = get_source_url()
     master_data = load_json_from_url(M4U_URL)
     if not master_data:
@@ -333,7 +308,6 @@ def list_channels():
             xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
     xbmcplugin.endOfDirectory(HANDLE)
-
 
 
 #------------------------------------FUSSBALL SPIELE----------------------------------------#
@@ -560,18 +534,6 @@ def extract_direct_url(plugin_link):
 ######################################################################################################################################
 ######################################################################################################################################
 
-#sat
-def play_direct_stream():
-    stream_url = "https://s6.hopslan.com/sat11/tracks-v1a1/mono.m3u8"
-
-    li = xbmcgui.ListItem(path=stream_url)
-    li.setMimeType("application/vnd.apple.mpegurl")
-    li.setProperty("IsPlayable", "true")
-
-    xbmcplugin.setResolvedUrl(HANDLE, True, li)
-
-
-
 #-------------------------------------M3U8------------------------------------------#
 from http.server import HTTPServer
 from threading import Thread
@@ -679,17 +641,9 @@ def router(paramstring):
     
     elif action == "play_m3u8" and stream:
         play_m3u8(stream)
-    
-    elif action == "play_direct_stream":
-       play_direct_stream()
 
     elif action == "test_menu":
         list_test_menu()
-
-    elif action == "toggle_source":
-        toggle_source_mode()
-        xbmc.executebuiltin(f"Container.Refresh")  # Liste neu laden
-    
 
     elif action == "enter_daddy_number":
         keyboard = xbmcgui.Dialog().input("Stream-Nummer eingeben", type=xbmcgui.INPUT_NUMERIC)
