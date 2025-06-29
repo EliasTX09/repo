@@ -84,7 +84,7 @@ def list_main_menu():
         xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
     url = f"{BASE_URL}?action=list_channels"
-    li = xbmcgui.ListItem(label="[COLOR lime]100% zuverlässige Sender[/COLOR]")
+    li = xbmcgui.ListItem(label="[COLOR lime]Sender[/COLOR]")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
 
@@ -458,7 +458,7 @@ def list_qualities_direct(params):
         if url:
             li = xbmcgui.ListItem(label=f"{quality} Qualität")
             li.setProperty("IsPlayable", "true")
-            play_url = build_url({'action': 'play_m3u8', 'stream': url})
+            play_url = build_url({'action': 'play_stream_simple', 'stream': url})
             xbmcplugin.addDirectoryItem(handle=HANDLE, url=play_url, listitem=li, isFolder=False)
 
     xbmcplugin.endOfDirectory(HANDLE)
@@ -593,6 +593,18 @@ def play_stream(url):
     except Exception as e:
         notify(f"Fehler: {e}")
 
+#normale m3u8# 
+
+def play_stream_simple(params):
+    stream_url = params.get('stream', [None])[0]
+    if not stream_url:
+        xbmcgui.Dialog().notification("Fehler", "Keine Stream-URL übergeben", xbmcgui.NOTIFICATION_ERROR)
+        return
+
+    li = xbmcgui.ListItem(path=stream_url)
+    li.setProperty("IsPlayable", "true")
+    xbmcplugin.setResolvedUrl(HANDLE, True, li)
+
 ######################################################################################################################################
 ######################################################################################################################################
 ####                                             ROUTER                                                                           ####
@@ -644,7 +656,11 @@ def router(paramstring):
 
     elif action == "test_menu":
         list_test_menu()
-
+    elif action == 'list_qualities':
+        list_qualities_direct(params)
+    elif action == 'play_stream_simple':
+        play_stream_simple(params)
+    
     elif action == "enter_daddy_number":
         keyboard = xbmcgui.Dialog().input("Stream-Nummer eingeben", type=xbmcgui.INPUT_NUMERIC)
         if keyboard and keyboard.isdigit():
