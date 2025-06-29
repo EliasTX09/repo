@@ -84,7 +84,7 @@ def list_main_menu():
         xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
     url = f"{BASE_URL}?action=list_channels"
-    li = xbmcgui.ListItem(label="[COLOR lime]Sender[/COLOR]")
+    li = xbmcgui.ListItem(label="[COLOR lime]100% zuverlässige Sender[/COLOR]")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
 
@@ -593,7 +593,7 @@ def play_stream(url):
     except Exception as e:
         notify(f"Fehler: {e}")
 
-#normale m3u8# 
+#----------------------------------------Normal ohne header-------------------------#
 
 def play_stream_simple(params):
     stream_url = params.get('stream', [None])[0]
@@ -605,6 +605,7 @@ def play_stream_simple(params):
     li.setProperty("IsPlayable", "true")
     xbmcplugin.setResolvedUrl(HANDLE, True, li)
 
+
 ######################################################################################################################################
 ######################################################################################################################################
 ####                                             ROUTER                                                                           ####
@@ -612,6 +613,8 @@ def play_stream_simple(params):
 ######################################################################################################################################
 
 def router(paramstring):
+    import urllib.parse
+
     params = urllib.parse.parse_qs(paramstring)
 
     action = params.get("action", [None])[0]
@@ -650,17 +653,12 @@ def router(paramstring):
     elif action == "setup_iptv":
         configure_iptv_simple()
 
-    
-    elif action == "play_m3u8" and stream:
-        play_m3u8(stream)
+    elif action == "play_stream_simple" and stream:
+        play_stream_simple(params)
 
     elif action == "test_menu":
         list_test_menu()
-    elif action == 'list_qualities':
-        list_qualities_direct(params)
-    elif action == 'play_stream_simple':
-        play_stream_simple(params)
-    
+
     elif action == "enter_daddy_number":
         keyboard = xbmcgui.Dialog().input("Stream-Nummer eingeben", type=xbmcgui.INPUT_NUMERIC)
         if keyboard and keyboard.isdigit():
@@ -675,3 +673,5 @@ def router(paramstring):
 if __name__ == "__main__":
     import sys
     router(sys.argv[2][1:])
+
+
