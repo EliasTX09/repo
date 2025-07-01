@@ -453,7 +453,7 @@ def list_qualities_direct(params):
         xbmcgui.Dialog().notification("Fehler", "Ungültige Senderdaten", xbmcgui.NOTIFICATION_ERROR)
         return
 
-    for quality in ["FHD", "HD", "SD", "HEVC"]:
+    for quality in ["FHD","QHD", "HD", "SD", "HEVC"]:
         url = channel.get(f"link({quality})")
         if url:
             li = xbmcgui.ListItem(label=f"{quality} Qualität")
