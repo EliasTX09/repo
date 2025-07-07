@@ -33,7 +33,7 @@ _JSON_URL_URLS = "https://raw.githubusercontent.com/EliasTX09/json/main/json.jso
 IMAGES_JSON_URL =  "https://raw.githubusercontent.com/EliasTX09/json/main/IMAGES"
 
 
-SENDER_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender.json"
+SENDER_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender-gast.json"
 
 SENDER_M3U_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender_test.m3u"
 
@@ -253,9 +253,9 @@ def configure_iptv_simple():
     import xbmcgui, xbmcvfs, os, urllib.request, xbmc
 
     try:
-        url = "https://raw.githubusercontent.com/EliasTX09/json/main/instance-settings-3.xml"
+        url = "https://raw.githubusercontent.com/EliasTX09/json/main/instance-settings-2.xml"
         addon_data_path = xbmcvfs.translatePath("special://userdata/addon_data/pvr.iptvsimple/")
-        settings_file = os.path.join(addon_data_path, "instance-settings-3.xml")
+        settings_file = os.path.join(addon_data_path, "instance-settings-2.xml")
 
         # Ordner sicherstellen
         if not xbmcvfs.exists(addon_data_path):
