@@ -81,19 +81,46 @@ def list_main_menu():
     for category in ["Männerligen", "Frauenligen"]:
         url = f"{BASE_URL}?action=list_category&category={urllib.parse.quote(category)}"
         li = xbmcgui.ListItem(label=category)
+
+        if category == "Männerligen":
+            icon = "https://cdn.futwiz.com/assets/img/fifa21/faces/84125165.png"
+        else:
+            icon = "https://upload.wikimedia.org/wikipedia/commons/3/30/Brighton_%26_Hove_Albion_Women_v_Manchester_United_Women_Shortcut.png"
+
+        # setArt() ist für beide Kategorien gleich
+        li.setArt({
+            'thumb': icon,
+            'icon': icon,
+            'poster': icon,
+        })
+
         xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
+
+
+
+
 
     url = f"{BASE_URL}?action=list_channels"
     li = xbmcgui.ListItem(label="[COLOR lime]Sender[/COLOR]")
+    icon = "https://cdn-icons-png.flaticon.com/512/168/168843.png"
+
+# Bild setzen
+    li.setArt({
+    'thumb': icon,
+    'icon': icon,
+    'poster': icon,})
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
-
-    url = f"{BASE_URL}?action=list_sender"
-    li = xbmcgui.ListItem(label="Sender")
-    xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
     li = xbmcgui.ListItem(label="[B][COLORyellow]TV Menu Setup[/COLOR][/B]")
     url = f"{sys.argv[0]}?action=configure_iptv_simple"
+    icon = "https://techeasy.ca/wp-content/uploads/2023/07/Tv-Setup-1024x683.jpg"
+
+# Bild setzen
+    li.setArt({
+    'thumb': icon,
+    'icon': icon,
+    'poster': icon,})    
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=li, isFolder=False)
 
 
@@ -281,6 +308,11 @@ def configure_iptv_simple():
 #------------------------------------M4U SENDER---------------------------------------------#
 
 def list_channels():
+    
+    url = f"{BASE_URL}?action=list_sender"
+    li = xbmcgui.ListItem(label="ERSATZ")
+    xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
+    
     # Quelle fest holen (z. B. aus GitHub verlinkter JSON)
     M4U_URL = get_source_url()
     master_data = load_json_from_url(M4U_URL)

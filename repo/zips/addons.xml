@@ -17,7 +17,7 @@
             <fanart>fanart.jpg</fanart>
         </assets>
     </extension>
-</addon><addon id="plugin.video.bundesliga" name="Sport" version="9.2.1" provider-name="Elias">
+</addon><addon id="plugin.video.bundesliga" name="Sport" version="9.3" provider-name="Elias">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
     <import addon="pvr.iptvsimple" />
@@ -54,7 +54,7 @@
         <disclaimer lang="en" />
         <license>MIT</license>
         <assets>
-            <icon>icon1.png</icon>
+            <icon>icon.png</icon>
             <fanart>fanart</fanart>
         </assets>
     </extension>
