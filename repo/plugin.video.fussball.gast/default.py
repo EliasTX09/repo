@@ -17,6 +17,26 @@ import requests
 from urllib.parse import quote_plus, unquote_plus, parse_qsl
 
 HANDLE = int(sys.argv[1])
+
+# ==============================
+# Konfigurierbare Konstanten
+# ==============================
+
+_JSON_URL_URLS = "https://raw.githubusercontent.com/EliasTX09/json/main/Others/FOOTBALL_LEAUGES.json"
+IMAGES_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/Others/PICTURES"
+SENDER_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/IPTV/SENDER.json"
+M4U_SOURCE_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/IPTV/IPTV_LINK.json"
+IPTV_SETTINGS_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/IPTV/IPTV_SETUP.xml"
+
+
+
+HEADER_STRING = (
+    "|Referer=https://alldownplay.xyz/"
+    "&Origin=https://alldownplay.xyz"
+    "&Connection=Keep-Alive"
+    "&User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
+)
+
 BASE_URL = sys.argv[0]
 
 ######################################################################################################################################
@@ -25,32 +45,13 @@ BASE_URL = sys.argv[0]
 ######################################################################################################################################
 ######################################################################################################################################
 
-# URLs für die verschiedenen Ligen
-_JSON_URL_URLS = "https://raw.githubusercontent.com/EliasTX09/json/main/json.json"
 
-
-# Bilder für die Ligen
-IMAGES_JSON_URL =  "https://raw.githubusercontent.com/EliasTX09/json/main/IMAGES"
-
-
-SENDER_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender-gast.json"
-
-SENDER_M3U_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender_test.m3u"
-
-M4U_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/MasterIPTV.json"
-
-HEADER_STRING = (
-    "|Referer=https://alldownplay.xyz/" +
-    "&Origin=https://alldownplay.xyz" +
-    "&Connection=Keep-Alive" +
-    "&User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
-)
 
 
 def get_source_url():
     addon = xbmcaddon.Addon()
     mode = addon.getSetting("m4u_mode") or "f"  # Standard: f
-    return f"https://raw.githubusercontent.com/EliasTX09/json/main/MasterIPTV.json"
+    return M4U_SOURCE_URL
 
 ######################################################################################################################################
 ######################################################################################################################################
@@ -81,19 +82,46 @@ def list_main_menu():
     for category in ["Männerligen", "Frauenligen"]:
         url = f"{BASE_URL}?action=list_category&category={urllib.parse.quote(category)}"
         li = xbmcgui.ListItem(label=category)
+
+        if category == "Männerligen":
+            icon = "https://cdn.futwiz.com/assets/img/fifa21/faces/84125165.png"
+        else:
+            icon = "https://upload.wikimedia.org/wikipedia/commons/3/30/Brighton_%26_Hove_Albion_Women_v_Manchester_United_Women_Shortcut.png"
+
+        # setArt() ist für beide Kategorien gleich
+        li.setArt({
+            'thumb': icon,
+            'icon': icon,
+            'poster': icon,
+        })
+
         xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
+
+
+
+
 
     url = f"{BASE_URL}?action=list_channels"
     li = xbmcgui.ListItem(label="[COLOR lime]Sender[/COLOR]")
+    icon = "https://cdn-icons-png.flaticon.com/512/168/168843.png"
+
+# Bild setzen
+    li.setArt({
+    'thumb': icon,
+    'icon': icon,
+    'poster': icon,})
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
-
-    url = f"{BASE_URL}?action=list_sender"
-    li = xbmcgui.ListItem(label="Sender")
-    xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
 
     li = xbmcgui.ListItem(label="[B][COLORyellow]TV Menu Setup[/COLOR][/B]")
     url = f"{sys.argv[0]}?action=configure_iptv_simple"
+    icon = "https://techeasy.ca/wp-content/uploads/2023/07/Tv-Setup-1024x683.jpg"
+
+# Bild setzen
+    li.setArt({
+    'thumb': icon,
+    'icon': icon,
+    'poster': icon,})    
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=li, isFolder=False)
 
 
@@ -253,34 +281,42 @@ def configure_iptv_simple():
     import xbmcgui, xbmcvfs, os, urllib.request, xbmc
 
     try:
-        url = "https://raw.githubusercontent.com/EliasTX09/json/main/instance-settings-2.xml"
+        url = IPTV_SETTINGS_URL
         addon_data_path = xbmcvfs.translatePath("special://userdata/addon_data/pvr.iptvsimple/")
         settings_file = os.path.join(addon_data_path, "instance-settings-2.xml")
 
-        # Ordner sicherstellen
+        # Sicherstellen, dass der Zielordner existiert
         if not xbmcvfs.exists(addon_data_path):
             xbmcvfs.mkdirs(addon_data_path)
 
-        # Datei laden und schreiben (immer überschreiben)
+        # Datei von der URL herunterladen
         response = urllib.request.urlopen(url, timeout=5)
         content = response.read()
 
+        # Datei im angegebenen Verzeichnis speichern
         with xbmcvfs.File(settings_file, 'w') as f:
             f.write(content)
 
-    except:
-        pass  # Alle Fehler vollständig unterdrücken – keine Meldung, kein Log
+    except Exception as e:
+        # Optional: Fehlerprotokollierung oder Debugging
+        xbmc.log(f"Fehler bei der IPTV-Konfiguration: {str(e)}", xbmc.LOGERROR)
+        pass  # Alle Fehler vollständig unterdrücken – keine Meldung im Dialog
 
-    # Immer Erfolgsdialog anzeigen
+    # Erfolgsdialog anzeigen
     xbmcgui.Dialog().ok("✅ IPTV Simple", "Konfiguration erfolgreich geladen.\nKodi wird jetzt beendet.")
 
     # Kodi sicher beenden
-    xbmc.executebuiltin("Quit()")
+    xbmc.restart()
 
 
 #------------------------------------M4U SENDER---------------------------------------------#
 
 def list_channels():
+    
+    url = f"{BASE_URL}?action=list_sender"
+    li = xbmcgui.ListItem(label="ERSATZ")
+    xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
+    
     # Quelle fest holen (z. B. aus GitHub verlinkter JSON)
     M4U_URL = get_source_url()
     master_data = load_json_from_url(M4U_URL)
@@ -650,7 +686,7 @@ def router(paramstring):
     elif action == "list_qualities_direct":
         list_qualities_direct(params)
 
-    elif action == "setup_iptv":
+    elif action == "configure_iptv_simple":
         configure_iptv_simple()
 
     elif action == "play_stream_simple" and stream:

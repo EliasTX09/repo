@@ -17,6 +17,26 @@ import requests
 from urllib.parse import quote_plus, unquote_plus, parse_qsl
 
 HANDLE = int(sys.argv[1])
+
+# ==============================
+# Konfigurierbare Konstanten
+# ==============================
+
+_JSON_URL_URLS = "https://raw.githubusercontent.com/EliasTX09/json/main/Others/FOOTBALL_LEAUGES.json"
+IMAGES_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/Others/PICTURES"
+SENDER_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/IPTV/SENDER.json"
+M4U_SOURCE_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/IPTV/IPTV_LINK.json"
+IPTV_SETTINGS_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/IPTV/IPTV_SETUP.xml"
+
+
+
+HEADER_STRING = (
+    "|Referer=https://alldownplay.xyz/"
+    "&Origin=https://alldownplay.xyz"
+    "&Connection=Keep-Alive"
+    "&User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
+)
+
 BASE_URL = sys.argv[0]
 
 ######################################################################################################################################
@@ -25,32 +45,13 @@ BASE_URL = sys.argv[0]
 ######################################################################################################################################
 ######################################################################################################################################
 
-# URLs für die verschiedenen Ligen
-_JSON_URL_URLS = "https://raw.githubusercontent.com/EliasTX09/json/main/json.json"
 
-
-# Bilder für die Ligen
-IMAGES_JSON_URL =  "https://raw.githubusercontent.com/EliasTX09/json/main/IMAGES"
-
-
-SENDER_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender.json"
-
-SENDER_M3U_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/sender_test.m3u"
-
-M4U_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/MasterIPTV.json"
-
-HEADER_STRING = (
-    "|Referer=https://alldownplay.xyz/" +
-    "&Origin=https://alldownplay.xyz" +
-    "&Connection=Keep-Alive" +
-    "&User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
-)
 
 
 def get_source_url():
     addon = xbmcaddon.Addon()
     mode = addon.getSetting("m4u_mode") or "f"  # Standard: f
-    return f"https://raw.githubusercontent.com/EliasTX09/json/main/MasterIPTV.json"
+    return M4U_SOURCE_URL
 
 ######################################################################################################################################
 ######################################################################################################################################
@@ -280,29 +281,32 @@ def configure_iptv_simple():
     import xbmcgui, xbmcvfs, os, urllib.request, xbmc
 
     try:
-        url = "https://raw.githubusercontent.com/EliasTX09/json/main/instance-settings-3.xml"
+        url = IPTV_SETTINGS_URL
         addon_data_path = xbmcvfs.translatePath("special://userdata/addon_data/pvr.iptvsimple/")
-        settings_file = os.path.join(addon_data_path, "instance-settings-3.xml")
+        settings_file = os.path.join(addon_data_path, "instance-settings-2.xml")
 
-        # Ordner sicherstellen
+        # Sicherstellen, dass der Zielordner existiert
         if not xbmcvfs.exists(addon_data_path):
             xbmcvfs.mkdirs(addon_data_path)
 
-        # Datei laden und schreiben (immer überschreiben)
+        # Datei von der URL herunterladen
         response = urllib.request.urlopen(url, timeout=5)
         content = response.read()
 
+        # Datei im angegebenen Verzeichnis speichern
         with xbmcvfs.File(settings_file, 'w') as f:
             f.write(content)
 
-    except:
-        pass  # Alle Fehler vollständig unterdrücken – keine Meldung, kein Log
+    except Exception as e:
+        # Optional: Fehlerprotokollierung oder Debugging
+        xbmc.log(f"Fehler bei der IPTV-Konfiguration: {str(e)}", xbmc.LOGERROR)
+        pass  # Alle Fehler vollständig unterdrücken – keine Meldung im Dialog
 
-    # Immer Erfolgsdialog anzeigen
+    # Erfolgsdialog anzeigen
     xbmcgui.Dialog().ok("✅ IPTV Simple", "Konfiguration erfolgreich geladen.\nKodi wird jetzt beendet.")
 
     # Kodi sicher beenden
-    xbmc.executebuiltin("Quit()")
+    xbmc.restart()
 
 
 #------------------------------------M4U SENDER---------------------------------------------#
@@ -682,7 +686,7 @@ def router(paramstring):
     elif action == "list_qualities_direct":
         list_qualities_direct(params)
 
-    elif action == "setup_iptv":
+    elif action == "configure_iptv_simple":
         configure_iptv_simple()
 
     elif action == "play_stream_simple" and stream:
