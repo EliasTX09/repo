@@ -7,4 +7,4 @@ __all__ = [
     for filename in files
     if not filename.startswith("__") and filename.endswith(".py")
 ]
-from . import *
+
