@@ -312,39 +312,50 @@ def configure_iptv_simple():
 #------------------------------------M4U SENDER---------------------------------------------#
 
 def list_channels():
-    
+    # Test-Eintrag (nur als Platzhalter)
     url = f"{BASE_URL}?action=list_sender"
     li = xbmcgui.ListItem(label="ERSATZ")
     xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
-    
-    # Quelle fest holen (z. B. aus GitHub verlinkter JSON)
+
+    # Quelle festlegen (z. B. GitHub-Master-JSON)
     M4U_URL = get_source_url()
     master_data = load_json_from_url(M4U_URL)
     if not master_data:
-        xbmcgui.Dialog().notification("Fehler", "Konnte Senderliste nicht laden", xbmcgui.NOTIFICATION_ERROR)
+        xbmcgui.Dialog().notification(
+            "Fehler", "Konnte Senderliste nicht laden", xbmcgui.NOTIFICATION_ERROR
+        )
         return
 
     source_urls = master_data.get("sources", [])
     if not source_urls:
-        xbmcgui.Dialog().notification("Fehler", "Keine Quellen gefunden", xbmcgui.NOTIFICATION_ERROR)
+        xbmcgui.Dialog().notification(
+            "Fehler", "Keine Quellen gefunden", xbmcgui.NOTIFICATION_ERROR
+        )
         return
 
+    # Alle Channels aus allen Quellen laden
     for source_url in source_urls:
         channels = load_json_from_url(source_url)
         if not channels:
             continue
 
         for channel in channels:
-            name = channel.get('title', 'Unbenannt')
-            logo = channel.get('thumbnail', '') or channel.get('logo', '')
-            url = build_url({'action': 'list_qualities_direct', 'data': quote_plus(json.dumps(channel))})
+            name = channel.get("title", "Unbenannt")
+            logo = channel.get("thumbnail", "") or channel.get("logo", "")
+            url = build_url({
+                "action": "list_qualities_direct",
+                "data": quote_plus(json.dumps(channel))
+            })
+
             li = xbmcgui.ListItem(label=name)
-            li.setArt({'icon': logo, 'thumb': logo})
+            li.setArt({"icon": logo, "thumb": logo})
             li.setProperty("IsPlayable", "false")
-            xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=li, isFolder=True)
+
+            xbmcplugin.addDirectoryItem(
+                handle=HANDLE, url=url, listitem=li, isFolder=True
+            )
 
     xbmcplugin.endOfDirectory(HANDLE)
-
 
 #------------------------------------FUSSBALL SPIELE----------------------------------------#
 
