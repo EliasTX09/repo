@@ -489,13 +489,30 @@ def list_qualities_direct(params):
         xbmcgui.Dialog().notification("Fehler", "Ungültige Senderdaten", xbmcgui.NOTIFICATION_ERROR)
         return
 
-    for quality in ["FHD","QHD", "HD", "SD", "HEVC"]:
-        url = channel.get(f"link({quality})")
-        if url:
-            li = xbmcgui.ListItem(label=f"{quality} Qualität")
-            li.setProperty("IsPlayable", "true")
-            play_url = build_url({'action': 'play_stream_simple', 'stream': url})
-            xbmcplugin.addDirectoryItem(handle=HANDLE, url=play_url, listitem=li, isFolder=False)
+    # Durch alle Keys iterieren und passende name/link Paare finden
+    i = 1
+    colors = ["lime", "orange", "yellow", "cyan", "red", "magenta"]  # wechselnde Farben
+    while True:
+        link_key = f"link({i})"
+        name_key = f"name({i})"
+
+        url = channel.get(link_key)
+        name = channel.get(name_key)
+
+        if not url or not name:
+            break  # Ende, wenn kein weiteres Paar existiert
+
+        # Farbe auswählen (rotiert durch die Liste)
+        color = colors[(i - 1) % len(colors)]
+        label = f"[COLOR {color}]{name}[/COLOR]"
+
+        li = xbmcgui.ListItem(label=label)
+        li.setProperty("IsPlayable", "true")
+
+        play_url = build_url({'action': 'play_stream_simple', 'stream': url})
+        xbmcplugin.addDirectoryItem(handle=HANDLE, url=play_url, listitem=li, isFolder=False)
+
+        i += 1
 
     xbmcplugin.endOfDirectory(HANDLE)
 
