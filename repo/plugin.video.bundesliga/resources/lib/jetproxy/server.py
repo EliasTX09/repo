@@ -2,19 +2,11 @@ import requests, time, xbmc, re
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
 from threading import Thread
-import binascii
 
 base_url = ""
 domain = ""
 x = 0
 # xbmc.log = print
-
-# Advanced caching for .ts and .mp4
-IP_CACHE_TS = {}
-IP_CACHE_MP4 = {}
-
-def get_cache_key(url):
-    return url
 
 
 class MyServer(BaseHTTPRequestHandler):
@@ -33,10 +25,6 @@ class MyServer(BaseHTTPRequestHandler):
         domain = urlparse(url).netloc
         headers = dict(self.headers)
         del headers["Host"]
-
-        # DNS override stub (implement as needed)
-        # def dns_override(): pass
-
         r = requests.get(url, headers=headers, stream=True) if req_type == "GET" else requests.head(url, headers=headers)
         if r.status_code in [403, 404]:
             xbmc.log(f"JetProxy: got status code {r.status_code}; start retrying (x = {x})", xbmc.LOGINFO)
@@ -58,28 +46,19 @@ class MyServer(BaseHTTPRequestHandler):
         self.end_headers()
         if req_type == "GET":
             if "mp2t" in r.headers["Content-Type"]:
-                cache_key = get_cache_key(url)
-                if cache_key not in IP_CACHE_TS:
-                    IP_CACHE_TS[cache_key] = []
                 e = False
                 while not e:
                     for chunk in r.iter_content(chunk_size=16384):
                         try:
                             self.wfile.write(chunk)
-                            # Cache last 20 chunks
-                            IP_CACHE_TS[cache_key].append(chunk)
-                            if len(IP_CACHE_TS[cache_key]) > 20:
-                                IP_CACHE_TS[cache_key].pop(0)
-                        except Exception as ex:
-                            xbmc.log(f"JetProxy: chunk streaming error: {ex}", xbmc.LOGERROR)
+                        except:
+                            print("except")
                             e = True
                             break
                     if not e:
                         xbmc.log(f"JetProxy: got EOF; retrying", xbmc.LOGINFO)
-                        r = requests.get(url, headers=headers, stream=True)
-                # On error, replay last 5 cached chunks
-                for chunk in IP_CACHE_TS[cache_key][-5:]:
-                    self.wfile.write(chunk)
+                        print("got eof")
+                        r = requests.get(url, headers=headers, stream=True)    
             else:
                 text = []
                 for line in r.iter_lines():
@@ -123,20 +102,7 @@ class MyServer(BaseHTTPRequestHandler):
             self.send_header(key, value)
         self.end_headers()
         if req_type == "GET":
-            cache_key = get_cache_key(url)
-            if cache_key not in IP_CACHE_TS:
-                IP_CACHE_TS[cache_key] = []
-            try:
-                for chunk in r.iter_content(chunk_size=16384):
-                    self.wfile.write(chunk)
-                    IP_CACHE_TS[cache_key].append(chunk)
-                    if len(IP_CACHE_TS[cache_key]) > 20:
-                        IP_CACHE_TS[cache_key].pop(0)
-            except Exception as ex:
-                xbmc.log(f"JetProxy: ts chunk streaming error: {ex}", xbmc.LOGERROR)
-                # On error, replay last 5 cached chunks
-                for chunk in IP_CACHE_TS[cache_key][-5:]:
-                    self.wfile.write(chunk)
+            self.wfile.write(r.content)
 
     def do_HEAD(self):
         if "index.bdm" in self.path.lower() or "video_ts.ifo" in self.path.lower():
