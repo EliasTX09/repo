@@ -103,7 +103,7 @@
             <fanart>fanart</fanart>
         </assets>
     </extension>
-</addon><addon id="plugin.video.fussball.gast" name="Fussball" version="1.3" provider-name="Elias">
+</addon><addon id="plugin.video.fussball.gast" name="Fussball" version="1.4" provider-name="Elias">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
     <import addon="pvr.iptvsimple" />

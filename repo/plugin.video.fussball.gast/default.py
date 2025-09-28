@@ -25,7 +25,7 @@ HANDLE = int(sys.argv[1])
 _JSON_URL_URLS = "https://raw.githubusercontent.com/EliasTX09/json/main/Others/FOOTBALL_LEAUGES.json"
 IMAGES_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/Others/PICTURES"
 SENDER_JSON_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/IPTV/SENDER.json"
-M4U_SOURCE_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/IPTV/IPTV_LINK_GUEST.json"
+M4U_SOURCE_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/IPTV/IPTV_LINK_GUEST"
 IPTV_SETTINGS_URL = "https://raw.githubusercontent.com/EliasTX09/json/main/IPTV/IPTV_SETUP.xml"
 
 
