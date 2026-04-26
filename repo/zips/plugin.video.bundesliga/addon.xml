@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.bundesliga" name="Sport" version="11.0" provider-name="Elias">
+<addon id="plugin.video.bundesliga" name="Sport" version="13.88.0" provider-name="Elias">
     <requires>
-    <import addon="xbmc.python" version="3.0.0" />
-    <import addon="pvr.iptvsimple" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.routing"/>
-    <import addon="inputstream.ffmpegdirect"/>
+        <import addon="xbmc.python" version="3.0.0" />
+        <import addon="pvr.iptvsimple" />
+        <import addon="script.module.requests" />
+        <import addon="script.module.routing"/>
+        <import addon="inputstream.ffmpegdirect"/>
+        <import addon="script.module.pytz" version="2021.3.0+matrix.1" />
     </requires>
 
     <extension point="xbmc.python.pluginsource" library="default.py">
